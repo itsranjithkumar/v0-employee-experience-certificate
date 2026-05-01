@@ -18,11 +18,13 @@ export default function Certificate({ data }: CertificateProps) {
     <div 
       className="w-full bg-white print:bg-white"
       style={{ 
-        borderLeft: '10px solid #d97706',
-        borderRight: '10px solid #d97706',
+        borderLeft: '8px solid #b8860b',
+        borderRight: '8px solid #b8860b',
+        borderTop: '2px solid #000000',
+        borderBottom: '2px solid #000000',
         fontFamily: '"Times New Roman", Times, serif',
         minHeight: '1000px',
-        color: '#1f2937'
+        color: '#000000'
       }}
     >
       {/* Certificate Content */}
@@ -37,36 +39,31 @@ export default function Certificate({ data }: CertificateProps) {
             </div>
           )}
 
-          {/* Company Names */}
-          {data.companyNameArabic && (
-            <div className="mb-1" style={{ direction: 'rtl' }}>
-              <h1 className="text-xl font-bold text-amber-900">{data.companyNameArabic}</h1>
-            </div>
-          )}
-          <h1 className="text-4xl font-bold text-amber-900 tracking-widest" style={{ letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
+          {/* Company Name */}
+          <h1 className="text-4xl font-bold text-black tracking-widest" style={{ letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
             {data.companyName}
           </h1>
         </div>
 
         {/* Date - Top Right */}
         {data.certificateDate && (
-          <div className="text-right text-sm font-bold text-gray-800 mb-8">
+          <div className="text-right text-sm font-bold text-black mb-8">
             <span>Date: {formatDate(data.certificateDate)}</span>
           </div>
         )}
 
         {/* Certification Title */}
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 tracking-widest" style={{ letterSpacing: '0.3em' }}>
+          <h2 className="text-2xl font-bold text-black tracking-widest" style={{ letterSpacing: '0.3em' }}>
             C E R T I F I C A T I O N
           </h2>
           <div className="flex justify-center mt-3">
-            <div className="w-32 h-px bg-gray-400"></div>
+            <div className="w-32 h-px bg-black"></div>
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="space-y-5 leading-8 text-gray-800">
+        <div className="space-y-5 leading-8 text-black">
           {/* Salutation */}
           <p className="font-bold text-sm">TO: WHOM IT MAY CONCERN,</p>
 
@@ -114,14 +111,14 @@ export default function Certificate({ data }: CertificateProps) {
             In view of the above, we express him our sincere gratitude and best appreciation.
           </p>
 
-          <p className="text-xs text-gray-600">
+          <p className="text-xs text-black">
             This certification is issued for any legal purpose it served.
           </p>
         </div>
 
         {/* Signature Section */}
-        <div className="mt-16 pt-8" style={{ borderTop: '1px solid #d1d5db' }}>
-          <p className="text-sm font-bold mb-8 text-gray-800">{data.companyName}, By</p>
+        <div className="mt-16 pt-8" style={{ borderTop: '2px solid #000000' }}>
+          <p className="text-sm font-bold mb-8 text-black">{data.companyName}, By</p>
           
           <div className="grid grid-cols-3 gap-12 text-center">
             {/* Manager Signature */}
@@ -131,10 +128,10 @@ export default function Certificate({ data }: CertificateProps) {
                   <img src={data.signatureManager} alt="Manager Signature" className="h-14 object-contain" />
                 )}
               </div>
-              <div style={{ borderTop: '1px solid #1f2937', paddingTop: '0.5rem' }}>
-                <p className="font-bold text-sm text-gray-800">{data.managerName}</p>
+              <div style={{ borderTop: '2px solid #000000', paddingTop: '0.5rem' }}>
+                <p className="font-bold text-sm text-black">{data.managerName}</p>
                 {data.managerTitle && (
-                  <p className="text-xs text-gray-700">{data.managerTitle}</p>
+                  <p className="text-xs text-black">{data.managerTitle}</p>
                 )}
               </div>
             </div>
@@ -156,28 +153,17 @@ export default function Certificate({ data }: CertificateProps) {
               )}
             </div>
 
-            {/* HR Signature */}
-            <div>
-              <div className="h-20 flex items-end justify-center mb-1">
-                {/* HR signature space */}
-              </div>
-              <div style={{ borderTop: '1px solid #1f2937', paddingTop: '0.5rem' }}>
-                <p className="font-bold text-sm text-gray-800">{data.hrName}</p>
-                {data.hrTitle && (
-                  <p className="text-xs text-gray-700">{data.hrTitle}</p>
-                )}
-              </div>
-            </div>
+
           </div>
         </div>
 
         {/* Footer */}
-        <div className="mt-12 pt-6" style={{ borderTop: '1px solid #d1d5db' }}>
-          <p className="text-xs text-gray-600 text-center leading-relaxed mb-6">
+        <div className="mt-12 pt-6" style={{ borderTop: '1px solid #000000' }}>
+          <p className="text-xs text-black text-center leading-relaxed mb-6">
             Issued this on {formatDate(data.certificateDate)} at {data.companyLocation} Main Office, Kingdom of Saudi Arabia. By {data.companyName}.
           </p>
           
-          <div className="grid grid-cols-3 gap-4 text-xs text-gray-600">
+          <div className="grid grid-cols-3 gap-4 text-xs text-black">
             <div className="text-center">
               <p className="font-semibold">Company Info</p>
               <p>{data.companyLocation}</p>

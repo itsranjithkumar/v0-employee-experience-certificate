@@ -26,15 +26,12 @@ export default function CertificateForm({ onSubmit, isLoading }: CertificateForm
     employeeId: '',
     jobTitle: '',
     companyName: '',
-    companyNameArabic: '',
     startDate: '',
     endDate: '',
     employmentType: 'Full-time',
     department: '',
     managerName: '',
     managerTitle: '',
-    hrName: '',
-    hrTitle: '',
     companyLocation: '',
     certificateDate: '',
     description: '',
@@ -111,7 +108,7 @@ export default function CertificateForm({ onSubmit, isLoading }: CertificateForm
 
           {/* Company Information */}
           <div className="space-y-2">
-            <Label htmlFor="companyName" className="text-amber-900 font-semibold">Company Name (English)</Label>
+            <Label htmlFor="companyName" className="text-amber-900 font-semibold">Company Name</Label>
             <Input
               id="companyName"
               name="companyName"
@@ -120,19 +117,6 @@ export default function CertificateForm({ onSubmit, isLoading }: CertificateForm
               onChange={handleChange}
               required
               placeholder="e.g., SAUDI TECHINT LTD."
-              className="border-amber-200 focus:border-amber-500 focus:ring-amber-500"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="companyNameArabic" className="text-amber-900 font-semibold">Company Name (Arabic)</Label>
-            <Input
-              id="companyNameArabic"
-              name="companyNameArabic"
-              type="text"
-              value={formData.companyNameArabic}
-              onChange={handleChange}
-              placeholder="e.g., شركة لكينيت السعودية المحدودة"
               className="border-amber-200 focus:border-amber-500 focus:ring-amber-500"
             />
           </div>
@@ -291,29 +275,7 @@ export default function CertificateForm({ onSubmit, isLoading }: CertificateForm
                   className="border-amber-200"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="hrName" className="text-amber-800">HR Name</Label>
-                <Input
-                  id="hrName"
-                  name="hrName"
-                  value={formData.hrName}
-                  onChange={handleChange}
-                  required
-                  placeholder="HR name"
-                  className="border-amber-200"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="hrTitle" className="text-amber-800">HR Title</Label>
-                <Input
-                  id="hrTitle"
-                  name="hrTitle"
-                  value={formData.hrTitle}
-                  onChange={handleChange}
-                  placeholder="e.g., HR Manager"
-                  className="border-amber-200"
-                />
-              </div>
+
             </div>
           </div>
 

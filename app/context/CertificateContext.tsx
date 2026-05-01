@@ -7,15 +7,12 @@ export interface CertificateData {
   employeeId: string
   jobTitle: string
   companyName: string
-  companyNameArabic: string
   startDate: string
   endDate: string
   employmentType: string
   department: string
   managerName: string
   managerTitle: string
-  hrName: string
-  hrTitle: string
   companyLocation: string
   certificateDate: string
   description: string
@@ -38,15 +35,12 @@ export function CertificateProvider({ children }: { children: React.ReactNode })
     employeeId: '',
     jobTitle: '',
     companyName: '',
-    companyNameArabic: '',
     startDate: '',
     endDate: '',
     employmentType: 'Full-time',
     department: '',
     managerName: '',
     managerTitle: '',
-    hrName: '',
-    hrTitle: '',
     companyLocation: '',
     certificateDate: '',
     description: '',
