@@ -12,8 +12,14 @@ export interface CertificateData {
   employmentType: string
   department: string
   managerName: string
-  hrName: string
+  managerTitle: string
   companyLocation: string
+  certificateDate: string
+  description: string
+  achievements: string
+  logo: string
+  signatureManager: string
+  stampImage: string
 }
 
 interface CertificateContextType {
@@ -34,8 +40,14 @@ export function CertificateProvider({ children }: { children: React.ReactNode })
     employmentType: 'Full-time',
     department: '',
     managerName: '',
-    hrName: '',
+    managerTitle: '',
     companyLocation: '',
+    certificateDate: '',
+    description: '',
+    achievements: '',
+    logo: '',
+    signatureManager: '',
+    stampImage: '',
   })
 
   return (

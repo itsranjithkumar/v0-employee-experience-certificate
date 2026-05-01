@@ -1,134 +1,178 @@
 'use client'
 
-import React, { useRef } from 'react'
+import React from 'react'
 import { CertificateData } from '../context/CertificateContext'
 
 interface CertificateProps {
   data: CertificateData
 }
 
+const formatDate = (dateString: string) => {
+  if (!dateString) return ''
+  const date = new Date(dateString + 'T00:00:00')
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+}
+
 export default function Certificate({ data }: CertificateProps) {
-  const certificateRef = useRef<HTMLDivElement>(null)
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    })
-  }
-
-  const getTodayDate = () => {
-    const today = new Date()
-    return today.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    })
-  }
-
-  const getTitle = (name: string) => {
-    if (name.toLowerCase().includes('mr') || name.toLowerCase().includes('ms') || 
-        name.toLowerCase().includes('mrs') || name.toLowerCase().includes('mrs')) {
-      return ''
-    }
-    // Simple heuristic: if name starts with certain letters, guess gender (this is just for demo)
-    return 'Mr./Ms.'
-  }
-
   return (
-    <div
-      ref={certificateRef}
-      className="w-full max-w-4xl mx-auto bg-white p-8 md:p-16 shadow-2xl rounded-lg border-4 border-amber-900 print:shadow-none print:border-0"
-      style={{
-        aspectRatio: '8.5 / 11',
+    <div 
+      className="w-full bg-white print:bg-white"
+      style={{ 
+        borderLeft: '8px solid #b8860b',
+        borderRight: '8px solid #b8860b',
+        borderTop: '2px solid #000000',
+        borderBottom: '2px solid #000000',
         fontFamily: '"Times New Roman", Times, serif',
+        minHeight: '1000px',
+        color: '#000000'
       }}
     >
-      {/* Certificate Header */}
-      <div className="text-center mb-12">
-        {/* Company Logo Placeholder */}
-        <div className="mb-6 h-20 flex items-center justify-center">
-          <div className="w-16 h-16 rounded-full border-4 border-slate-300 flex items-center justify-center bg-slate-100">
-            <span className="text-sm font-bold text-slate-400">LOGO</span>
-          </div>
-        </div>
-
-        {/* Company Name */}
-        <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2 tracking-wide">
-          {data.companyName}
-        </h1>
-
-        {/* Certificate Title */}
-        <div className="border-t-2 border-b-2 border-slate-400 py-4 my-6">
-          <h2 className="text-3xl font-bold text-slate-900 tracking-wider">
-            EXPERIENCE CERTIFICATE
-          </h2>
-        </div>
-      </div>
-
       {/* Certificate Content */}
-      <div className="text-center mb-12 leading-8">
-        <p className="text-slate-800 text-lg mb-6">
-          This is to certify that <span className="font-bold">{getTitle(data.employeeName)} {data.employeeName}</span>, holding Employee ID{' '}
-          <span className="font-bold">{data.employeeId}</span>, was employed with{' '}
-          <span className="font-bold">{data.companyName}</span> as a{' '}
-          <span className="font-bold">{data.jobTitle}</span> in the{' '}
-          <span className="font-bold">{data.department}</span> from{' '}
-          <span className="font-bold">{formatDate(data.startDate)}</span> to{' '}
-          <span className="font-bold">{formatDate(data.endDate)}</span>.
-        </p>
-
-        <p className="text-slate-800 text-lg leading-8 mb-6">
-          During their tenure with us, they have demonstrated professionalism, dedication,
-          and strong work ethics. Their contributions to the organization have been valuable
-          and appreciated.
-        </p>
-
-        <p className="text-slate-800 text-lg">
-          We wish them success in their future endeavors.
-        </p>
-      </div>
-
-      {/* Signature Section */}
-      <div className="mt-16 pt-8 border-t border-slate-300">
-        <div className="grid grid-cols-3 gap-8 text-center">
-          {/* Manager Signature */}
-          <div>
-            <div className="h-16 mb-2 flex items-flex-end justify-center">
-              <div className="w-24 border-t-2 border-slate-800"></div>
+      <div className="p-16 max-w-4xl mx-auto">
+        
+        {/* Header Section */}
+        <div className="text-center mb-4">
+          {/* Company Logo */}
+          {data.logo && (
+            <div className="flex justify-center mb-4">
+              <img src={data.logo} alt="Company Logo" className="h-20 object-contain" />
             </div>
-            <p className="text-slate-800 font-bold text-sm">{data.managerName}</p>
-            <p className="text-slate-600 text-xs">Manager</p>
+          )}
+
+          {/* Company Name */}
+          <h1 className="text-4xl font-bold text-black tracking-widest" style={{ letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
+            {data.companyName}
+          </h1>
+        </div>
+
+        {/* Date - Top Right */}
+        {data.certificateDate && (
+          <div className="text-right text-sm font-bold text-black mb-8">
+            <span>Date: {formatDate(data.certificateDate)}</span>
+          </div>
+        )}
+
+        {/* Certification Title */}
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-black tracking-widest" style={{ letterSpacing: '0.3em' }}>
+            C E R T I F I C A T I O N
+          </h2>
+          <div className="flex justify-center mt-3">
+            <div className="w-32 h-px bg-black"></div>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="space-y-5 leading-8 text-black">
+          {/* Salutation */}
+          <p className="font-bold text-sm">TO: WHOM IT MAY CONCERN,</p>
+
+          {/* Main paragraph with italics */}
+          <div className="italic leading-loose">
+            <p>
+              This Certificate serves as appreciation for the excellent performance of{' '}
+              <span className="font-bold not-italic">{data.employeeName}</span>, who worked with our{' '}
+              {data.department && <span>{data.department} </span>}
+              Team
+              {data.jobTitle && <span> in {data.jobTitle}</span>} activities.
+            </p>
+            
+            <p className="mt-3">
+              During his job tenure from{' '}
+              <span className="font-bold not-italic">{formatDate(data.startDate)}</span> to{' '}
+              <span className="font-bold not-italic">{formatDate(data.endDate)}</span>, he has shown diligence and integrity 
+              with our project team. I have found his work to be highly professional, through and productive.
+            </p>
           </div>
 
-          {/* Date */}
-          <div>
-            <div className="h-16 mb-2 flex items-flex-end justify-center">
-              <div className="text-slate-800 text-sm font-semibold">
-                {getTodayDate()}
+          {/* Description - if available */}
+          {data.description && (
+            <p className="whitespace-pre-wrap leading-relaxed">{data.description}</p>
+          )}
+
+          {/* Achievements Section */}
+          {data.achievements && (
+            <div>
+              <p>
+                For his outstanding performance during the completion of following projects:
+              </p>
+              <div className="ml-6 space-y-2 whitespace-pre-wrap">
+                {data.achievements}
               </div>
             </div>
-            <p className="text-slate-800 font-bold text-sm">Date</p>
-            <p className="text-slate-600 text-xs">of Issue</p>
-          </div>
+          )}
 
-          {/* HR Signature */}
-          <div>
-            <div className="h-16 mb-2 flex items-flex-end justify-center">
-              <div className="w-24 border-t-2 border-slate-800"></div>
+          {/* Closing paragraphs */}
+          <p className="italic font-semibold">
+            This Letter of Appreciation is issued for his efforts towards the completion of Project.
+          </p>
+
+          <p>
+            In view of the above, we express him our sincere gratitude and best appreciation.
+          </p>
+
+          <p className="text-xs text-black">
+            This certification is issued for any legal purpose it served.
+          </p>
+        </div>
+
+        {/* Signature Section */}
+        <div className="mt-16 pt-12" style={{ borderTop: '2px solid #000000' }}>
+          <p className="text-sm font-bold mb-16 text-black">{data.companyName}, By</p>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', textAlign: 'center' }}>
+            {/* Manager Signature */}
+            <div>
+              <div style={{ minHeight: '140px', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', marginBottom: '16px' }}>
+                {data.signatureManager && (
+                  <img src={data.signatureManager} alt="Manager Signature" style={{ maxHeight: '120px', maxWidth: '180px', objectFit: 'contain' }} />
+                )}
+              </div>
+              <div style={{ borderTop: '2px solid #000000', paddingTop: '12px' }}>
+                <p style={{ fontWeight: 'bold', fontSize: '14px', margin: '4px 0', color: '#000000' }}>{data.managerName}</p>
+                {data.managerTitle && (
+                  <p style={{ fontSize: '12px', margin: '2px 0', color: '#000000' }}>{data.managerTitle}</p>
+                )}
+              </div>
             </div>
-            <p className="text-slate-800 font-bold text-sm">{data.hrName}</p>
-            <p className="text-slate-600 text-xs">HR</p>
+
+            {/* Company Seal/Stamp */}
+            <div>
+              <div style={{ minHeight: '140px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
+                {data.stampImage && (
+                  <img src={data.stampImage} alt="Company Seal" style={{ maxHeight: '120px', maxWidth: '120px', objectFit: 'contain' }} />
+                )}
+              </div>
+              {!data.stampImage && (
+                <div style={{ width: '120px', height: '120px', margin: '0 auto', border: '3px solid #0066cc', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg style={{ width: '60px', height: '60px', color: '#0066cc' }} fill="currentColor" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2" />
+                  </svg>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Company Location Footer */}
-        <div className="mt-8 text-center">
-          <p className="text-slate-700 font-semibold text-sm">
-            {data.companyLocation}
+        {/* Footer */}
+        <div className="mt-12 pt-6" style={{ borderTop: '1px solid #000000' }}>
+          <p className="text-xs text-black text-center leading-relaxed mb-6">
+            Issued this on {formatDate(data.certificateDate)} at {data.companyLocation} Main Office, Kingdom of Saudi Arabia. By {data.companyName}.
           </p>
+          
+          <div className="grid grid-cols-3 gap-4 text-xs text-black">
+            <div className="text-center">
+              <p className="font-semibold">Company Info</p>
+              <p>{data.companyLocation}</p>
+            </div>
+            <div className="text-center">
+              <p>{data.companyName}</p>
+            </div>
+            <div className="text-center">
+              <p className="font-semibold">Contact</p>
+              <p>For inquiries</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
