@@ -20,16 +20,16 @@ export default function PreviewPage() {
       const html2pdf = (await import('html2pdf.js')).default
 
       const options = {
-        margin: 5,
-        filename: `${data.employeeName}_experience_certificate.pdf`,
+        margin: [10, 10, 10, 10],
+        filename: `${data.employeeName || 'certificate'}_certificate.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { format: 'a4', orientation: 'portrait' },
+        html2canvas: { scale: 2, useCORS: true, allowTaint: true },
+        jsPDF: { format: 'a4', orientation: 'portrait', unit: 'mm' },
       }
 
-      html2pdf().set(options).from(element).save()
+      await html2pdf().set(options).from(element).save()
     } catch (error) {
-      console.error('Error generating PDF:', error)
+      console.error('[v0] PDF Download Error:', error)
       alert('Failed to download PDF. Please try again.')
     }
   }
@@ -69,8 +69,10 @@ export default function PreviewPage() {
         </div>
 
         {/* Certificate Container */}
-        <div ref={certificateRef} className="bg-white overflow-hidden shadow-2xl" style={{ pageBreakAfter: 'avoid' }}>
-          <Certificate data={data} />
+        <div className="bg-white overflow-hidden shadow-2xl">
+          <div ref={certificateRef} style={{ pageBreakAfter: 'avoid' }}>
+            <Certificate data={data} />
+          </div>
         </div>
 
         {/* Print Instructions */}

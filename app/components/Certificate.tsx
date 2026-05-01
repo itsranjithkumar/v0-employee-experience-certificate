@@ -117,43 +117,40 @@ export default function Certificate({ data }: CertificateProps) {
         </div>
 
         {/* Signature Section */}
-        <div className="mt-16 pt-8" style={{ borderTop: '2px solid #000000' }}>
-          <p className="text-sm font-bold mb-8 text-black">{data.companyName}, By</p>
+        <div className="mt-16 pt-12" style={{ borderTop: '2px solid #000000' }}>
+          <p className="text-sm font-bold mb-16 text-black">{data.companyName}, By</p>
           
-          <div className="grid grid-cols-3 gap-12 text-center">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', textAlign: 'center' }}>
             {/* Manager Signature */}
             <div>
-              <div className="h-20 flex items-end justify-center mb-1">
+              <div style={{ minHeight: '140px', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', marginBottom: '16px' }}>
                 {data.signatureManager && (
-                  <img src={data.signatureManager} alt="Manager Signature" className="h-14 object-contain" />
+                  <img src={data.signatureManager} alt="Manager Signature" style={{ maxHeight: '120px', maxWidth: '180px', objectFit: 'contain' }} />
                 )}
               </div>
-              <div style={{ borderTop: '2px solid #000000', paddingTop: '0.5rem' }}>
-                <p className="font-bold text-sm text-black">{data.managerName}</p>
+              <div style={{ borderTop: '2px solid #000000', paddingTop: '12px' }}>
+                <p style={{ fontWeight: 'bold', fontSize: '14px', margin: '4px 0', color: '#000000' }}>{data.managerName}</p>
                 {data.managerTitle && (
-                  <p className="text-xs text-black">{data.managerTitle}</p>
+                  <p style={{ fontSize: '12px', margin: '2px 0', color: '#000000' }}>{data.managerTitle}</p>
                 )}
               </div>
             </div>
 
             {/* Company Seal/Stamp */}
             <div>
-              <div className="h-24 flex items-center justify-center mb-2">
+              <div style={{ minHeight: '140px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
                 {data.stampImage && (
-                  <img src={data.stampImage} alt="Company Seal" className="h-20 w-20 object-contain" />
+                  <img src={data.stampImage} alt="Company Seal" style={{ maxHeight: '120px', maxWidth: '120px', objectFit: 'contain' }} />
                 )}
               </div>
               {!data.stampImage && (
-                <div className="border-4 border-blue-600 rounded-full w-20 h-20 mx-auto flex items-center justify-center">
-                  <svg className="w-10 h-10 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                <div style={{ width: '120px', height: '120px', margin: '0 auto', border: '3px solid #0066cc', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg style={{ width: '60px', height: '60px', color: '#0066cc' }} fill="currentColor" viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2" />
-                    <text x="12" y="14" textAnchor="middle" fontSize="10" fontWeight="bold" fill="currentColor">SEAL</text>
                   </svg>
                 </div>
               )}
             </div>
-
-
           </div>
         </div>
 
