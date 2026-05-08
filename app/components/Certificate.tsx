@@ -243,3 +243,5 @@ export default function Certificate({ data }: CertificateProps) {
     </div>
   )
 }
+
+``
