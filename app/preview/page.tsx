@@ -1,104 +1,101 @@
 'use client'
 
-import React, { useRef } from 'react'
-import { useRouter } from 'next/navigation'
-import { Button } from '@/components/ui/button'
+import React from 'react'
 import { useCertificate } from '../context/CertificateContext'
 import Certificate from '../components/Certificate'
-import { Download, ArrowLeft } from 'lucide-react'
 
 export default function PreviewPage() {
-  const router = useRouter()
   const { data } = useCertificate()
-  const certificateRef = useRef<HTMLDivElement>(null)
 
-  const handleDownloadPDF = async () => {
-    try {
-      const element = certificateRef.current
-      console.log('Element:', element);
-      if (!element) return
-
-      const html2pdf = (await import('html2pdf.js')).default
-
-      const options = {
-        margin: [10, 10, 10, 10] as [number, number, number, number],
-        filename: `${data.employeeName || 'certificate'}_certificate.pdf`,
-        image: { type: 'jpeg' as 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, allowTaint: true },
-        jsPDF: { format: 'a4', orientation: 'portrait' as 'portrait', unit: 'mm' },
-      }
-
-      await html2pdf().set(options).from(element).save()
-    } catch (error) {
-      console.error('[v0] PDF Download Error:', error)
-      alert('Failed to download PDF. Please try again.')
-    }
+  const handleDownloadPDF = () => {
+    window.print()
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <Button
-            onClick={() => router.back()}
-            variant="outline"
-            className="mb-6 text-amber-800 border-amber-300 hover:bg-amber-100"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Edit
-          </Button>
-
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <h1 className="text-3xl font-bold text-amber-950">
-                Certificate Preview
-              </h1>
-              <p className="text-amber-800 mt-2">
-                Review your certificate and download as PDF
-              </p>
-            </div>
-
-            <Button
-              onClick={handleDownloadPDF}
-              className="bg-amber-700 hover:bg-amber-800 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
-            >
-              <Download className="w-5 h-5" />
-              Download PDF
-            </Button>
-          </div>
-        </div>
-
-        {/* Certificate Container */}
-        <div className="bg-white overflow-hidden shadow-2xl">
-          <div ref={certificateRef} style={{ pageBreakAfter: 'avoid' }}>
-            <Certificate data={data} />
-          </div>
-        </div>
-
-        {/* Print Instructions */}
-        <div className="mt-8 p-6 bg-amber-100 border border-amber-300 rounded-lg text-center">
-          <p className="text-amber-900">
-            You can also <strong>print directly to PDF</strong> using your browser&apos;s print function (Ctrl+P or Cmd+P)
-          </p>
-        </div>
-      </div>
-
-      {/* Print Styles */}
-      <style jsx>{`
+    <>
+      <style>{`
         @media print {
-          body {
-            background: white;
+          @page {
+            size: 794px 1123px;
+            margin: 0;
           }
-          div {
+          * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+          }
+          html, body {
+            width: 794px !important;
+            height: 1123px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden !important;
+            background: white !important;
+          }
+          body * { visibility: hidden; }
+          #cert-area, #cert-area * { visibility: visible !important; }
+          #cert-area {
+            position: fixed !important;
+            top: 0 !important; left: 0 !important;
+            width: 794px !important;
+            height: 1123px !important;
+            margin: 0 !important; padding: 0 !important;
+            overflow: hidden !important;
+            background: white !important;
             box-shadow: none !important;
-            border-radius: 0 !important;
           }
-          .max-w-5xl {
-            max-width: 100%;
+          #cert-inner {
+            width: 794px !important;
+            height: 1123px !important;
+            transform: none !important;
+          }
+          .no-print { display: none !important; }
+        }
+
+        @media screen {
+          html, body { margin: 0; padding: 0; }
+          body {
+            background: #0d1a2e;
+            min-height: 100vh;
+            padding: 32px 16px 100px;
+            box-sizing: border-box;
+          }
+          #cert-area {
+            width: 794px;
+            height: 1123px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 4px 40px rgba(0,0,0,0.28);
+            overflow: hidden;
+          }
+          #cert-inner {
+            width: 794px;
+            height: 1123px;
+            overflow: hidden;
           }
         }
       `}</style>
-    </div>
+
+      <div id="cert-area">
+        <div id="cert-inner">
+          <Certificate data={data} />
+        </div>
+      </div>
+
+      <div className="no-print" style={{ position: 'fixed', bottom: '28px', right: '28px', display: 'flex', gap: '10px', zIndex: 1000 }}>
+        <button
+          onClick={() => window.history.back()}
+          style={{ padding: '11px 22px', background: '#1e3a6a', color: '#c9a84c', border: '1px solid #c9a84c', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '13px', letterSpacing: '0.05em' }}
+        >
+          ← Back
+        </button>
+        <button
+          onClick={handleDownloadPDF}
+          style={{ padding: '11px 26px', background: 'linear-gradient(135deg, #c9a84c, #a07830)', color: '#07111f', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 700, fontSize: '13px', letterSpacing: '0.05em', boxShadow: '0 4px 20px rgba(201,168,76,0.35)' }}
+        >
+          ⬇ Download PDF
+        </button>
+      </div>
+    </>
   )
 }
